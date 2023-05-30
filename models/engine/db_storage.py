@@ -2,7 +2,6 @@
 """
 Contains the class DBStorage
 """
-
 from models.amenity import Amenity
 from models.base_model import BaseModel, Base
 from models.city import City
@@ -58,6 +57,14 @@ class DBStorage:
                     key = "{}.{}".format(type(obj).__name__, obj.id)
                     new_dict[key] = obj
         return new_dict
+
+    def get(self, cls, id):
+        """Retrieve an object from the current database session"""
+        if cls and id:
+            obj = self.__session.query(cls).get(id)
+            return obj
+        else:
+            return None
 
     def new(self, obj):
         """Add the object to the current database session"""
